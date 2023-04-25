@@ -7,12 +7,11 @@ from django_extensions.db.models import (
 )
 
 
-# Create your models here.
 class Contact(TimeStampedModel, ActivatorModel, TitleDescriptionModel, Model):
     class Meta:
         verbose_name_plural = "Contacts"
 
     email = models.EmailField(verbose_name="Email")
 
-    def __str__(self) -> str:
+    def __str__(self):
         return f"{self.title}"

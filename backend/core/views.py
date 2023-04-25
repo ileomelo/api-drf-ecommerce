@@ -6,26 +6,21 @@ from rest_framework import views, status
 from rest_framework.response import Response
 
 
-# Create your views here.
 class ContactAPIView(views.APIView):
     """
-        Simples view para criar um contato
+    A simple APIView for creating contact entires.
     """
+
     serializer_class = ContactSerializer
 
     def get_serializer_context(self):
-        return {
-            'request': self.request,
-            'format': self.format_kwarg,
-            'view': self
-        }
-    
-    def get_serializer(self, *args, **kwargs):
-        kwargs['context'] = self.get_serializer_context()
-        return self.serializer_class(*args, **kwargs)
-    
-    def post(self, request):
+        return {"request": self.request, "format": self.format_kwarg, "view": self}
 
+    def get_serializer(self, *args, **kwargs):
+        kwargs["context"] = self.get_serializer_context()
+        return self.serializer_class(*args, **kwargs)
+
+    def post(self, request):
         try:
             data = JSONParser().parse(request)
             serializer = ContactSerializer(data=data)
@@ -34,6 +29,7 @@ class ContactAPIView(views.APIView):
                 return Response(serializer.data)
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
         except JSONDecodeError:
-            return JsonResponse({"result": "error", "message": "JSON decoding error"}, status=400)
+            return JsonResponse(
+                {"result": "error", "message": "Json decoding error"}, status=400
+            )
