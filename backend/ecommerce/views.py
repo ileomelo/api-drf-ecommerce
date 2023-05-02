@@ -23,7 +23,7 @@ class OrderViewSet(ListModelMixin, RetrieveModelMixin, UpdateModelMixin, viewset
     A simple viewSet for listing, retrieving and creating orders
     """
 
-    permission_classes = (IsAuthenticated)
+    permission_classes = (IsAuthenticated,)
     serializer_class = OrderSerializer
 
     def get_queryset(self):
@@ -36,7 +36,7 @@ class OrderViewSet(ListModelMixin, RetrieveModelMixin, UpdateModelMixin, viewset
     def create(self, request):
         try:
             data = JSONParser().parse(request)
-            serializer = OrderSerializer(dta = data)
+            serializer = OrderSerializer(data = data)
             if serializer.is_valid(raise_exception=True):
                 item = Item.objects.get(pk = data["item"])
                 order = item.place_order(request.user, data["quantity"])

@@ -16,7 +16,7 @@ class NotEnoughStockException(APIException):
 class ItemSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Item
-        field = ("title", "stock", "price")
+        fields = ("title", "stock", "price")
 
 
 class OrderSerializer(serializers.HyperlinkedModelSerializer):
